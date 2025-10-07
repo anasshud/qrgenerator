@@ -2,69 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Generating QR Code...</title>
+  <title>Register | Wi-Fi QR Generator</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: #f2f2f2;
-      margin: 0;
-      padding: 0;
-    }
-
-    .container {
-      margin-top: 100px;
-      background: white;
-      display: inline-block;
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-
-    h2 {
-      color: #333;
-    }
-
-    p {
-      color: #555;
-    }
-
-    .loading {
-      width: 60px;
-      height: 60px;
-      border: 6px solid #ccc;
-      border-top-color: #4CAF50;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 20px auto;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .back-btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 15px;
-      background: #4CAF50;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-
-    .back-btn:hover {
-      background: #45a049;
-    }
-  </style>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
 </head>
 <body>
   <div class="container">
-    <div class="loading"></div>
-    <h2>Generating Your QR Code...</h2>
-    <p>Please wait a moment while your Wi-Fi QR code is being prepared.</p>
-    <a href="index.html" class="back-btn">⬅ Back to Home</a>
+    <h2>Register</h2>
+    <input type="email" id="registerEmail" placeholder="Email" required><br>
+    <input type="password" id="registerPassword" placeholder="Password" required><br>
+    <button onclick="register()">Register</button>
+    <p>Already have an account? <a href="index.html">Login</a></p>
   </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
