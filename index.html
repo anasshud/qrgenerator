@@ -4,67 +4,162 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wi-Fi QR Generator</title>
-  
+
   <!-- Firebase + QRCode.js -->
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
 
-  <!-- 🌈 CSS styling inside HTML -->
+  <!-- 🌈 Inline CSS -->
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #74ABE2, #5563DE);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
+      background-color: #f7d86d;
       color: #333;
     }
-    .container {
+
+    /* Navigation Bar */
+    nav {
+      background-color: #0097a7;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 25px;
+      color: white;
+    }
+
+    nav .menu {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav a, nav button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    nav .login-btn {
       background: white;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      width: 350px;
+      color: #0097a7;
+      border-radius: 20px;
+      padding: 6px 15px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav .login-btn:hover {
+      background: #ffe082;
+      color: #004d40;
+    }
+
+    /* Centered forms */
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
       text-align: center;
-      animation: fadeIn 0.6s ease-in;
+      padding: 30px;
+      display: none;
     }
-    h2 {
-      color: #3346b0;
-      margin-bottom: 10px;
+
+    .container.active {
+      display: block;
+      animation: fadeIn 0.5s ease-in-out;
     }
+
     input {
       width: 90%;
       padding: 10px;
       margin: 8px 0;
-      border: 1px solid #ccc;
       border-radius: 8px;
-      font-size: 14px;
+      border: 1px solid #ccc;
     }
+
     button {
-      background: #4a63d9;
+      background: #0097a7;
       color: white;
       border: none;
       padding: 10px 15px;
-      margin-top: 10px;
       border-radius: 8px;
       cursor: pointer;
-      transition: 0.3s;
+      margin-top: 10px;
     }
-    button:hover { background: #3a53c5; }
-    #qrcode { margin-top: 20px; }
-    #timer { color: red; font-weight: bold; margin-top: 5px; }
-    .hidden { display: none; }
-    hr { border: 0; height: 1px; background: #eee; margin: 20px 0; }
-    ul { list-style-type: none; padding: 0; text-align: left; }
-    li { margin-bottom: 10px; }
-    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+
+    button:hover {
+      background: #00796b;
+    }
+
+    .content {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .steps {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: white;
+      width: 260px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border: 2px solid black;
+    }
+
+    .card h3 {
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    #qrcode {
+      margin-top: 15px;
+    }
+
+    #timer {
+      color: red;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="menu">
+      <button onclick="toggleMenu()">☰</button>
+      <a href="#"><span>🏠</span> Home</a>
+      <a href="#"><span>➕</span> Create</a>
+      <a href="#"><span>🛠</span> Tools</a>
+      <a href="#"><span>❓</span> Help</a>
+    </div>
+    <div>
+      <button class="login-btn" onclick="showLogin()">Login</button>
+    </div>
+  </nav>
 
   <!-- Login Form -->
   <div class="container" id="loginContainer">
@@ -76,7 +171,7 @@
   </div>
 
   <!-- Register Form -->
-  <div class="container hidden" id="registerContainer">
+  <div class="container" id="registerContainer">
     <h2>Register</h2>
     <input type="email" id="registerEmail" placeholder="Email"><br>
     <input type="password" id="registerPassword" placeholder="Password"><br>
@@ -84,25 +179,36 @@
     <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
   </div>
 
-  <!-- Main QR Generator Page -->
-  <div class="container hidden" id="mainContainer">
-    <h2>Wi-Fi QR Generator</h2>
-    <input type="text" id="ssid" placeholder="Wi-Fi SSID"><br>
-    <input type="text" id="password" placeholder="Wi-Fi Password"><br>
-    <input type="number" id="minutes" placeholder="Access Time (minutes)" min="1"><br>
-    <button onclick="generateQR()">Generate QR</button>
+  <!-- Main Page -->
+  <div class="content container" id="mainContainer">
+    <h1>Create and Customize your QR code</h1>
 
-    <div id="qrcode"></div>
-    <p id="timer"></p>
-    <hr>
-    <h3>Your QR History</h3>
-    <div id="history"></div>
-    <button onclick="logout()">Logout</button>
+    <div class="steps">
+      <div class="card">
+        <h3>Enter Wi-Fi Details</h3>
+        <input type="text" id="ssid" placeholder="SSID">
+        <input type="text" id="password" placeholder="Password">
+        <input type="number" id="minutes" placeholder="Access Time (minutes)" min="1">
+      </div>
+
+      <div class="card">
+        <h3>Generate QR</h3>
+        <button onclick="generateQR()">Generate</button>
+        <div id="qrcode"></div>
+        <p id="timer"></p>
+      </div>
+
+      <div class="card">
+        <h3>History</h3>
+        <div id="history"></div>
+        <button onclick="logout()">Logout</button>
+      </div>
+    </div>
   </div>
 
-  <!-- ☁️ Firebase + App Script -->
+  <!-- Firebase + App Logic -->
   <script>
-    // 🔥 Firebase Config (replace with your Firebase project details)
+    // 🔥 Firebase Config
     const firebaseConfig = {
       apiKey: "AIzaSyChf-qZnsFv-828e4ioHh9Txm6dLV0sPys",
       authDomain: "wifiqrproject.firebaseapp.com",
@@ -115,20 +221,27 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // 🧭 UI Navigation
+    // UI Navigation
     function showLogin() {
-      document.getElementById('loginContainer').classList.remove('hidden');
-      document.getElementById('registerContainer').classList.add('hidden');
+      document.getElementById("loginContainer").classList.add("active");
+      document.getElementById("registerContainer").classList.remove("active");
+      document.getElementById("mainContainer").classList.remove("active");
     }
     function showRegister() {
-      document.getElementById('registerContainer').classList.remove('hidden');
-      document.getElementById('loginContainer').classList.add('hidden');
+      document.getElementById("registerContainer").classList.add("active");
+      document.getElementById("loginContainer").classList.remove("active");
+      document.getElementById("mainContainer").classList.remove("active");
+    }
+    function showMain() {
+      document.getElementById("mainContainer").classList.add("active");
+      document.getElementById("loginContainer").classList.remove("active");
+      document.getElementById("registerContainer").classList.remove("active");
     }
 
-    // 👤 Auth
+    // Auth Logic
     function login() {
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
 
       auth.signInWithEmailAndPassword(email, password)
         .then(() => showMain())
@@ -136,25 +249,21 @@
     }
 
     function register() {
-      const email = document.getElementById('registerEmail').value;
-      const password = document.getElementById('registerPassword').value;
+      const email = document.getElementById("registerEmail").value;
+      const password = document.getElementById("registerPassword").value;
 
       auth.createUserWithEmailAndPassword(email, password)
         .then(() => {
-          alert('Account created!');
+          alert("Account created!");
           showLogin();
         })
         .catch(err => alert(err.message));
     }
 
     function logout() {
-      auth.signOut().then(() => {
-        document.getElementById('mainContainer').classList.add('hidden');
-        showLogin();
-      });
+      auth.signOut().then(() => showLogin());
     }
 
-    // 🧩 Show main page after login
     auth.onAuthStateChanged(user => {
       if (user) {
         showMain();
@@ -162,19 +271,13 @@
       }
     });
 
-    function showMain() {
-      document.getElementById('loginContainer').classList.add('hidden');
-      document.getElementById('registerContainer').classList.add('hidden');
-      document.getElementById('mainContainer').classList.remove('hidden');
-    }
-
-    // 🔳 Generate QR Code
+    // Generate QR
     function generateQR() {
-      const ssid = document.getElementById('ssid').value;
-      const password = document.getElementById('password').value;
-      const minutes = parseInt(document.getElementById('minutes').value);
-      const qrcodeDiv = document.getElementById('qrcode');
-      const timerEl = document.getElementById('timer');
+      const ssid = document.getElementById("ssid").value;
+      const password = document.getElementById("password").value;
+      const minutes = parseInt(document.getElementById("minutes").value);
+      const qrcodeDiv = document.getElementById("qrcode");
+      const timerEl = document.getElementById("timer");
       const user = auth.currentUser;
 
       if (!ssid || !password || !minutes) {
@@ -186,7 +289,7 @@
       const wifiData = `WIFI:T:WPA;S:${ssid};P:${password};;`;
       new QRCode(qrcodeDiv, wifiData);
 
-      // Save history
+      // Save to Firebase
       db.collection("users").doc(user.uid).collection("history").add({
         ssid: ssid,
         password: password,
@@ -194,7 +297,7 @@
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       }).then(() => loadHistory(user.uid));
 
-      // Countdown
+      // Countdown timer
       let seconds = minutes * 60;
       const countdown = setInterval(() => {
         const m = Math.floor(seconds / 60);
@@ -203,15 +306,15 @@
         seconds--;
         if (seconds < 0) {
           clearInterval(countdown);
-          qrcodeDiv.innerHTML = "<p style='color:red;'>QR Code expired!</p>";
+          qrcodeDiv.innerHTML = "<p style='color:red;'>QR expired!</p>";
           timerEl.textContent = "";
         }
       }, 1000);
     }
 
-    // 📜 Load History
+    // Load History
     function loadHistory(uid) {
-      const historyDiv = document.getElementById('history');
+      const historyDiv = document.getElementById("history");
       historyDiv.innerHTML = "<p>Loading...</p>";
 
       db.collection("users").doc(uid).collection("history")
@@ -224,7 +327,7 @@
             return;
           }
 
-          let html = "<ul>";
+          let html = "<ul style='text-align:left'>";
           snapshot.forEach(doc => {
             const data = doc.data();
             const time = data.timestamp ? data.timestamp.toDate().toLocaleString() : "Unknown";
@@ -234,8 +337,9 @@
           historyDiv.innerHTML = html;
         });
     }
+
+    // Default to Login view
+    showLogin();
   </script>
 </body>
 </html>
-
-
