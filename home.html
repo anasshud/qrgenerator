@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wi-Fi QR Generator</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+  <script src="firebase-config.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>Wi-Fi QR Generator</h2>
+    <input type="text" id="ssid" placeholder="Wi-Fi SSID"><br>
+    <input type="text" id="password" placeholder="Wi-Fi Password"><br>
+    <input type="number" id="minutes" placeholder="Access Time (minutes)" min="1"><br>
+    <button onclick="generateQR()">Generate QR</button>
+
+    <div id="qrcode" style="margin-top:20px;"></div>
+    <p id="timer"></p>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
