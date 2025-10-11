@@ -273,44 +273,44 @@
 
     // Generate QR
     function generateQR() {
-      const ssid = document.getElementById("ssid").value;
-      const password = document.getElementById("password").value;
-      const minutes = parseInt(document.getElementById("minutes").value);
-      const qrcodeDiv = document.getElementById("qrcode");
-      const timerEl = document.getElementById("timer");
-      const user = auth.currentUser;
+  const ssid = document.getElementById("ssid").value;
+  const password = document.getElementById("password").value;
+  const minutes = parseInt(document.getElementById("minutes").value);
+  const qrcodeDiv = document.getElementById("qrcode");
+  const timerEl = document.getElementById("timer");
+  const user = auth.currentUser;
 
-      if (!ssid || !password || !minutes) {
-        alert("Please fill in all fields!");
-        return;
-      }
+  if (!ssid || !password || !minutes) {
+    alert("Please fill in all fields!");
+    return;
+  }
 
-      qrcodeDiv.innerHTML = "";
-      const wifiData = `WIFI:T:WPA;S:${ssid};P:${password};;`;
-      new QRCode(qrcodeDiv, wifiData);
+  qrcodeDiv.innerHTML = "";
+  const wifiData = `WIFI:T:WPA;S:${ssid};P:${password};;`;
+  new QRCode(qrcodeDiv, wifiData);
 
-      // Save to Firebase
-      db.collection("users").doc(user.uid).collection("history").add({
-        ssid: ssid,
-        password: password,
-        duration: minutes,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(() => loadHistory(user.uid));
+  db.collection("users").doc(user.uid).collection("history").add({
+    ssid, password, duration: minutes,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  }).then(() => loadHistory(user.uid));
 
-      // Countdown timer
-      let seconds = minutes * 60;
-      const countdown = setInterval(() => {
-        const m = Math.floor(seconds / 60);
-        const s = seconds % 60;
-        timerEl.textContent = `QR expires in: ${m}m ${s}s`;
-        seconds--;
-        if (seconds < 0) {
-          clearInterval(countdown);
-          qrcodeDiv.innerHTML = "<p style='color:red;'>QR expired!</p>";
-          timerEl.textContent = "";
-        }
-      }, 1000);
+  // Simulated countdown (demo only)
+  let seconds = minutes * 60;
+  const countdown = setInterval(() => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    timerEl.textContent = `Access will end in: ${m}m ${s}s`;
+    seconds--;
+    if (seconds < 0) {
+      clearInterval(countdown);
+      timerEl.textContent = "Access time ended! Please reconnect.";
+      qrcodeDiv.innerHTML = "<p style='color:red;'>Access expired</p>";
     }
+  }, 1000);
+
+  alert(`QR Generated for ${minutes} minutes. The system will simulate access timeout.`);
+}
+
 
     // Load History
     function loadHistory(uid) {
