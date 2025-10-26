@@ -19,47 +19,238 @@
       --white: #ffffff;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: var(--beige); color: var(--green-dark); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-    header { background-color: var(--green); color: var(--white); padding: 20px 25px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
-    .logo { font-size: 24px; font-weight: bold; }
-    .logo span { color: var(--beige); }
-    .nav-links { display: flex; gap: 20px; }
-    .nav-links a { color: var(--white); text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
-    .nav-links a:hover { color: var(--beige); }
+    body {
+      background-color: var(--beige);
+      color: var(--green-dark);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
-    .auth-container { background-color: var(--white); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 40px; width: 100%; max-width: 420px; margin: auto; margin-top: 80px; display: none; animation: fadeIn 0.3s ease; }
-    .auth-container.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    .auth-title { font-size: 26px; font-weight: 700; color: var(--green-dark); margin-bottom: 25px; text-align: center; }
+    header {
+      background-color: var(--green);
+      color: var(--white);
+      padding: 20px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
 
-    .form-control { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px; }
-    .btn-primary { background-color: var(--green); color: var(--white); border: none; padding: 12px; border-radius: 8px; font-weight: 600; width: 100%; cursor: pointer; transition: background-color 0.3s ease; }
-    .btn-primary:hover { background-color: var(--green-dark); }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
 
-    footer { background-color: var(--green); color: var(--white); text-align: center; padding: 35px 0; margin-top: auto; font-size: 14px; border-top-left-radius: 20px; border-top-right-radius: 20px; }
+    .logo span {
+      color: var(--beige);
+    }
 
-    .main-content { padding: 40px 20px; text-align: center; display: none; }
-    .steps-container { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; max-width: 1000px; margin: 40px auto; }
-    .step { background: var(--white); border-radius: 16px; box-shadow: 0 8px 18px rgba(0,0,0,0.1); padding: 25px; min-width: 280px; flex: 1; transition: transform 0.3s ease; }
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--beige);
+    }
+
+    .auth-container {
+      background-color: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      width: 100%;
+      max-width: 420px;
+      margin: auto;
+      margin-top: 80px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .auth-container.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .auth-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    .btn-primary {
+      background-color: var(--green);
+      color: var(--white);
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      width: 100%;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--green-dark);
+    }
+
+    .auth-link {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .auth-link a {
+      color: var(--green);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .auth-link a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      background-color: var(--green);
+      color: var(--white);
+      text-align: center;
+      padding: 35px 0;
+      margin-top: auto;
+      font-size: 14px;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+    }
+
+    .main-content {
+      padding: 40px 20px;
+      text-align: center;
+      display: none;
+    }
+
+    .steps-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+      max-width: 1000px;
+      margin: 40px auto;
+    }
+
+    .step {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      min-width: 280px;
+      flex: 1;
+      transition: transform 0.3s ease;
+    }
+
     .step:hover { transform: translateY(-5px); }
-    .step-title { color: var(--green-dark); font-weight: 700; margin-bottom: 15px; font-size: 18px; }
 
-    .qrcode-container { border: 1px dashed #ccc; border-radius: 12px; padding: 20px; min-height: 180px; display: flex; justify-content: center; align-items: center; background-color: #fafafa; }
-    .timer { color: #b0413e; font-weight: bold; margin-top: 10px; }
-    .history-item { background-color: #f0f0f0; border-left: 4px solid var(--green); padding: 8px; border-radius: 6px; margin-top: 10px; text-align: left; }
+    .step-title {
+      color: var(--green-dark);
+      font-weight: 700;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
 
-    /* password field with toggle */
-    .pw-wrap { position: relative; }
-    .pw-toggle { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--green-dark); font-weight: 600; cursor: pointer; padding: 6px; border-radius: 6px; }
+    .qrcode-container {
+      border: 1px dashed #ccc;
+      border-radius: 12px;
+      padding: 20px;
+      min-height: 180px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fafafa;
+    }
+
+    .timer {
+      color: #b0413e;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .history-item {
+      background-color: #f0f0f0;
+      border-left: 4px solid var(--green);
+      padding: 8px;
+      border-radius: 6px;
+      margin-top: 10px;
+      text-align: left;
+    }
 
     /* Popup modal */
-    .popup { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); justify-content: center; align-items: center; z-index: 1000; }
-    .popup-content { background: var(--white); padding: 30px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); text-align: center; max-width: 300px; }
-    .popup-content h3 { color: #b0413e; margin-bottom: 15px; }
-    .popup-content button { background: var(--green); color: white; padding: 8px 16px; border: none; border-radius: 8px; cursor: pointer; }
-    .popup-content button:hover { background: var(--green-dark); }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .popup-content {
+      background: var(--white);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      max-width: 300px;
+    }
+
+    .popup-content h3 {
+      color: #b0413e;
+      margin-bottom: 15px;
+    }
+
+    .popup-content button {
+      background: var(--green);
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .popup-content button:hover {
+      background: var(--green-dark);
+    }
   </style>
 </head>
 
@@ -99,20 +290,13 @@
   <div class="main-content">
     <h1>Create and Customize Your QR Code</h1>
     <div class="steps-container">
-
       <div class="step">
         <h3 class="step-title">Step 1: Enter Details</h3>
         <input id="ssid" class="form-control" placeholder="Wi-Fi SSID" />
-        <!-- password masked with toggle -->
-        <div class="pw-wrap" style="margin-top:10px;">
-          <input id="password" class="form-control" placeholder="Wi-Fi Password" type="password" />
-          <button id="pwToggle" class="pw-toggle" type="button">Show</button>
-        </div>
-
+        <input id="password" class="form-control" type="password" placeholder="Wi-Fi Password" />
         <input id="minutes" type="number" min="1" class="form-control" placeholder="Access Time (minutes)" />
         <button class="btn-primary" onclick="generateQR()">Generate QR</button>
       </div>
-
       <div class="step">
         <h3 class="step-title">Step 2: Your QR Code</h3>
         <div id="qrcode" class="qrcode-container"></div>
@@ -120,7 +304,6 @@
         <div id="history"></div>
         <button class="btn-primary" onclick="logout()">Logout</button>
       </div>
-
     </div>
   </div>
 
@@ -152,19 +335,6 @@
     const db = firebase.firestore();
 
     const popup = document.getElementById("popup");
-    const pwToggle = document.getElementById("pwToggle");
-    const passwordInput = document.getElementById("password");
-
-    // Toggle show/hide password
-    pwToggle.addEventListener('click', () => {
-      if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        pwToggle.innerText = 'Hide';
-      } else {
-        passwordInput.type = 'password';
-        pwToggle.innerText = 'Show';
-      }
-    });
 
     function showLogin() {
       loginContainer.classList.add("active");
@@ -213,116 +383,60 @@
       popup.style.display = "none";
     }
 
-    // ---------------------------
-    // Encryption helpers (Web Crypto API)
-    // ---------------------------
-
-    function ab2b64(buf) {
-      const bytes = new Uint8Array(buf);
-      let binary = '';
-      for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
-      return btoa(binary);
-    }
-    function b642ab(base64) {
-      const binary = atob(base64);
-      const len = binary.length;
-      const bytes = new Uint8Array(len);
-      for (let i = 0; i < len; i++) bytes[i] = binary.charCodeAt(i);
-      return bytes.buffer;
-    }
-
-    async function deriveKey(passphrase, salt) {
-      const enc = new TextEncoder();
-      const passKey = await crypto.subtle.importKey('raw', enc.encode(passphrase), {name: 'PBKDF2'}, false, ['deriveKey']);
-      const key = await crypto.subtle.deriveKey({
-        name: 'PBKDF2',
-        salt: salt,
-        iterations: 150000,
-        hash: 'SHA-256'
-      }, passKey, {name: 'AES-GCM', length: 256}, false, ['encrypt', 'decrypt']);
-      return key;
-    }
-
-    // encrypt plaintext using passphrase (we use user.uid as passphrase)
-    async function encryptText(plaintext, passphrase) {
-      const enc = new TextEncoder();
-      const salt = crypto.getRandomValues(new Uint8Array(16));
-      const iv = crypto.getRandomValues(new Uint8Array(12));
-      const key = await deriveKey(passphrase, salt);
-      const ciphertext = await crypto.subtle.encrypt({name: 'AES-GCM', iv: iv}, key, enc.encode(plaintext));
-      return {
-        ciphertext: ab2b64(ciphertext),
-        iv: ab2b64(iv.buffer),
-        salt: ab2b64(salt.buffer)
-      };
-    }
-
-    // If you ever want to decrypt (not used here), you can implement decryptText similarly.
-
-    // ---------------------------
-    // Generate QR (use plaintext for QR, store encrypted password)
-    // ---------------------------
-    async function generateQR() {
-      const ssidEl = document.getElementById("ssid");
-      const pwdEl = document.getElementById("password");
-      const minutesEl = document.getElementById("minutes");
+    // Generate QR
+    function generateQR() {
+      const ssid = document.getElementById("ssid").value;
+      const pwd = document.getElementById("password").value;
+      const min = parseInt(document.getElementById("minutes").value);
       const qDiv = document.getElementById("qrcode");
       const timerEl = document.getElementById("timer");
       const user = auth.currentUser;
 
-      const ssid = ssidEl.value.trim();
-      const pwd = pwdEl.value;
-      const min = parseInt(minutesEl.value);
-
       if (!user) return alert("Login first");
       if (!ssid || !pwd || !min) return alert("Fill all fields");
 
-      // generate QR for immediate use
       qDiv.innerHTML = "";
       new QRCode(qDiv, { text: `WIFI:T:WPA;S:${ssid};P:${pwd};;`, width: 180, height: 180 });
 
-      // encrypt the password before storing in Firestore
-      try {
-        const encObj = await encryptText(pwd, user.uid); // key derived from user.uid
-        // store ssid, encryptedPassword, iv, salt, duration
-        await db.collection("users").doc(user.uid).collection("history").add({
-          ssid,
-          passwordEncrypted: encObj.ciphertext,
-          iv: encObj.iv,
-          salt: encObj.salt,
-          duration: min,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        // refresh history
-        loadHistory(user.uid);
-      } catch (e) {
-        console.error("Encryption / save error:", e);
-        alert("Failed to save history securely. Check console.");
-      }
+      db.collection("users").doc(user.uid).collection("history").add({
+        ssid, password: pwd, duration: min,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      }).then(() => loadHistory(user.uid));
 
-      // timer (client side)
       let s = min * 60;
-      // clear any previous countdown stored globally
-      if (window.__qr_countdown) clearInterval(window.__qr_countdown);
-      window.__qr_countdown = setInterval(() => {
+      const interval = setInterval(() => {
         const m = Math.floor(s / 60);
         const sec = s % 60;
         timerEl.textContent = `Access ends in: ${m}m ${sec}s`;
         s--;
         if (s < 0) {
-          clearInterval(window.__qr_countdown);
+          clearInterval(interval);
           timerEl.textContent = "Access expired";
           qDiv.innerHTML = "<p style='color:red;'>Expired</p>";
           popup.style.display = "flex";
         }
       }, 1000);
-
-      alert(`QR code generated for ${min} minutes.`);
     }
 
-    // show history (password not shown)
     function loadHistory(uid) {
       const historyDiv = document.getElementById("history");
       historyDiv.innerHTML = "<p>Loading...</p>";
       db.collection("users").doc(uid).collection("history")
         .orderBy("timestamp", "desc").limit(5)
+        .get()
+        .then(snap => {
+          if (snap.empty) return historyDiv.innerHTML = "<p>No history yet.</p>";
+          let html = "";
+          snap.forEach(doc => {
+            const d = doc.data();
+            const time = d.timestamp ? d.timestamp.toDate().toLocaleString() : "Unknown";
+            html += `<div class='history-item'><strong>${d.ssid}</strong> (${d.duration} min)<br><small>${time}</small></div>`;
+          });
+          historyDiv.innerHTML = html;
+        });
+    }
+
+    showLogin();
+  </script>
+</body>
+</html>
